@@ -1,0 +1,2 @@
+Rope: wrong contact
+Contact is predicted incorrectly in the last four frames.

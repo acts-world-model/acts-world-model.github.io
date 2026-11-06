@@ -1,0 +1,2 @@
+PushT: wrong dynamics
+The predicted T position diverges from the ground truth in the scene and tactile views, and the T deforms.

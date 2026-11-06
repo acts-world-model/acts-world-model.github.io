@@ -1,0 +1,2 @@
+Rope: wrong contact
+The predicted contact location and tactile image are wrong.

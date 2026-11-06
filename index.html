@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ACTS: a visuo-tactile world model trained only on human physical interaction. Project page with videos.">
+  <title>ACTS: Learning Visuo-Tactile World Models from Human Physical Interaction</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect width=%2216%22 height=%2216%22 rx=%224%22 fill=%22%23b5522b%22/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="static/css/style.css">
+  <script src="static/js/videos.js"></script>
+  <script src="static/js/main.js"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="mark" href="#top"><span>ACTS</span></a>
+  <div class="links">
+    <a href="#method">Method</a>
+    <a href="#short">Short horizon</a>
+    <a href="#robot">Robot</a>
+    <a href="#baselines">Baselines</a>
+    <a href="#ablations">Ablation</a>
+    <a href="#failures">Failure cases</a>
+    <a href="#long">Long horizon</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <h1><span class="acts">ACTS</span>: Learning Visuo-Tactile World Models from Human Physical Interaction</h1>
+    <p class="authors">
+      <span class="author">Yuxiang Ma<sup>1*</sup></span>
+      <span class="author">Weihan Xu<sup>2*</sup></span>
+      <span class="author">Pengfei Ye<sup>1</sup></span>
+      <span class="author">Anna Mei<sup>3</sup></span>
+      <span class="author">Yuxin Ray Song<sup>1</sup></span>
+      <span class="author">Tingle Li<sup>4</sup></span>
+      <span class="author">Haonan Chen<sup>5</sup></span>
+      <span class="author">Yilun Du<sup>3</sup></span>
+      <span class="author">Edward H. Adelson<sup>1</sup></span>
+    </p>
+    <p class="affil">
+      <span><sup>1</sup>MIT</span>
+      <span><sup>2</sup>University of Washington</span>
+      <span><sup>3</sup>Harvard University</span>
+      <span><sup>4</sup>UC Berkeley</span>
+      <span><sup>5</sup>Stanford University</span>
+    </p>
+    <p class="equal"><sup>*</sup>Equal contribution</p>
+    <p class="venue">CoRL 2026 Workshop: Robots Need World Models</p>
+    <div class="buttons">
+      <span class="btn disabled" title="Coming soon">Paper: coming soon</span>
+      <span class="btn disabled" title="Coming soon">Code &amp; Dataset: coming soon</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Abstract</h2>
+    <p>
+      Action-conditioned world models for contact-rich manipulation require data that captures how contact
+      forms, slides, and releases under varying force. Such data are slow to collect through robot
+      teleoperation, which often lacks force feedback and is constrained by gripper geometry. We ask whether
+      these dynamics can instead be learned from human physical interaction and transferred to a robot.
+    </p>
+    <p>
+      We present <strong>ACTS</strong>, a visuo-tactile world model trained only on human interaction data.
+      Operators manipulate handheld GelSight sensors while we record third-person and wrist video, tactile
+      images, 6-DoF sensor motion, and tactile-derived normal force, yielding React, a 4.9-hour bimanual
+      dataset across three objects. We represent actions at the tactile sensor as motion augmented by force
+      change, providing a shared action space for human collection and robot execution. ACTS jointly predicts
+      future scene, wrist, and tactile observations. Without fine-tuning, predicted tactile imprints on robot
+      teleoperation still appear and disappear with recorded contact, while wrist views can blur or
+      hallucinate structure.
+    </p>
+  </div>
+</section>
+
+<section class="soft" id="method">
+  <div class="wrap">
+    <h2>Method</h2>
+    <p class="lead">
+      Frozen encoders map the scene view, both wrist views, and both tactile streams to latents. A Cosmos3
+      generator, adapted with LoRA, jointly denoises future tokens of all five streams, conditioned on the
+      input frames, force-aware sensor actions, and view-aligned actions.
+    </p>
+    <figure class="fig">
+      <img src="static/images/overview.png" alt="ACTS architecture overview." loading="lazy">
+    </figure>
+    <div class="two-col" style="margin-top: 32px;">
+      <div>
+        <h3>Force-aware sensor actions</h3>
+        <p class="muted">
+          Each action is the relative sensor motion plus a displacement along the gel normal proportional to
+          the change in estimated normal force. A robot carrying the same sensor produces actions in the same
+          space.
+        </p>
+      </div>
+      <figure class="fig" style="margin: 0;">
+        <img src="static/images/force_action.png" alt="Force-induced offset below the observed contact position." loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="short">
+  <div class="wrap">
+    <h2>Short-Horizon Prediction</h2>
+    <p class="lead">
+      Held-out human data. From 8 input frames and the recorded actions, ACTS predicts the next 8 frames
+      (0.53&nbsp;s at 15&nbsp;fps) of all five streams. Top row: ground truth; bottom row: prediction.
+    </p>
+    <div id="short-videos"></div>
+  </div>
+</section>
+
+<section class="soft" id="robot">
+  <div class="wrap">
+    <h2>Zero-Shot Transfer to Robot Teleoperation</h2>
+    <p class="lead">
+      Models trained only on human data, applied to robot teleoperation without fine-tuning. Robot tactile
+      color and wrist-camera tone are normalized to the human data.
+    </p>
+    <div id="robot-videos"></div>
+  </div>
+</section>
+
+<section id="baselines">
+  <div class="wrap">
+    <h2>Baseline Comparison</h2>
+    <p class="lead">ACTS and the VT-WM-style baseline, both trained on React, on the same test window. Each clip shows the ground truth once, with one prediction row per model below it.</p>
+    <div id="baseline-videos"></div>
+  </div>
+</section>
+
+<section class="soft" id="ablations">
+  <div class="wrap">
+    <h2>Ablation: Force-Aware Actions</h2>
+    <p class="lead">Force-aware and pose-only sensor actions on the same test window, shown under one ground-truth row.</p>
+    <div id="ablation-videos"></div>
+  </div>
+</section>
+
+<section id="failures">
+  <div class="wrap">
+    <h2>Failure Cases</h2>
+    <div id="failure-videos"></div>
+  </div>
+</section>
+
+<section class="soft" id="long">
+  <div class="wrap">
+    <h2>Long-Horizon Rollouts</h2>
+    <p class="lead">
+      ACTS generates the future autoregressively, 8 frames at a time. Each block is conditioned on the input
+      frames, the blocks generated before it, and the recorded actions. From 8 input frames, 15 blocks give
+      120 predicted frames (8&nbsp;s).
+    </p>
+    <div id="long-videos"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">ACTS project page.</div>
+</footer>
+
+</body>
+</html>

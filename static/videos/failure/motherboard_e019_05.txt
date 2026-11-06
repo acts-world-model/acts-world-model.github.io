@@ -1,0 +1,2 @@
+Motherboard: wrong imprint and distortion
+The left tactile imprint is wrong and the motherboard is distorted in the wrist views, owing to its complex geometry.
