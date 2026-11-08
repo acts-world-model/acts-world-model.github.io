@@ -1,0 +1,29 @@
+{
+  "task": "pushT",
+  "calibration_id": "june-26",
+  "created": "2026-06-26",
+  "method": "PnP (11 points, pixel)",
+  "applies_to_dates": [
+    "2026-06-18"
+  ],
+  "rmse_unit": "px",
+  "cameras": {
+    "left": {
+      "camera_serial": "104122062574",
+      "rmse": 0.5178622670651918,
+      "created_at": "2026-06-26T01:52:08"
+    },
+    "middle": {
+      "camera_serial": "217222066989",
+      "rmse": 0.6407235248458195,
+      "created_at": "2026-06-26T01:28:28"
+    },
+    "right": {
+      "camera_serial": "143322063538",
+      "rmse": 0.6773529089318477,
+      "created_at": "2026-06-26T01:28:28"
+    }
+  },
+  "projection_chain": "sensor_pose (mocap mm) -> T_mocap_to_cam -> camera intrinsics -> pixel; gel center via T_gel_to_rigid",
+  "note": "June-26 recalibration (multi-cam). Applies to pushT and future tasks."
+}

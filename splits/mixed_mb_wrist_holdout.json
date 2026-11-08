@@ -1,0 +1,49 @@
+{
+  "name": "mixed_mb_wrist_holdout",
+  "note": "Rebuilt 2026-09-17 on React f186f5f6 and again 2026-09-18 on 990a6787 (OptiTrack two-state flicker repair; pose-only, force unchanged): the 25 motherboard 0911/0912 episodes were regenerated in mixed_mb_actions/ from the repaired OptiTrack poses and the v8 (0-15 N) force channel. The 32 mode1_v2 episodes (0510/0511/0519, no wrist) were DROPPED because upstream removed their force columns from old_data (no v8 force exists for them); their latents remain in mixed_mb_latents but are unused. val = 0911_ep002_seg00 + 0912_ep003 (in-dist, wrist); test = 0911_ep008_seg00 + 0912_ep002 (in-dist) + the three val0909 episodes (OOD hardware/calibration session, never in train; NOTE their force is still the pre-v8 calibration, max 7.87 N, so test metrics on them use a different force scale). Every remaining episode has wrist cameras. Pre-rebuild file: mixed_mb_wrist_holdout.pre_0917.json; pre-rebuild actions: mixed_mb_actions_pre_0917/.",
+  "counts": {
+    "train_windows": 71485,
+    "train_episodes": 21,
+    "train_windows_with_wrist": 71485,
+    "val_windows": 5411,
+    "val_episodes": 2,
+    "val_windows_with_wrist": 5411,
+    "test_windows": 16699,
+    "test_episodes": 5,
+    "test_windows_with_wrist": 16699
+  },
+  "train": [
+    "motherboard_0911_episode_000.pt",
+    "motherboard_0911_episode_001_seg00.pt",
+    "motherboard_0911_episode_001_seg01.pt",
+    "motherboard_0911_episode_003_seg00.pt",
+    "motherboard_0911_episode_004_seg00.pt",
+    "motherboard_0911_episode_004_seg01.pt",
+    "motherboard_0911_episode_005_seg00.pt",
+    "motherboard_0911_episode_005_seg01.pt",
+    "motherboard_0911_episode_005_seg02.pt",
+    "motherboard_0911_episode_005_seg03.pt",
+    "motherboard_0911_episode_005_seg04.pt",
+    "motherboard_0911_episode_005_seg05.pt",
+    "motherboard_0911_episode_006_seg00.pt",
+    "motherboard_0911_episode_006_seg01.pt",
+    "motherboard_0911_episode_007_seg00.pt",
+    "motherboard_0911_episode_007_seg01.pt",
+    "motherboard_0911_episode_007_seg02.pt",
+    "motherboard_0911_episode_007_seg03.pt",
+    "motherboard_0911_episode_007_seg04.pt",
+    "motherboard_0912_episode_000_seg00.pt",
+    "motherboard_0912_episode_000_seg01.pt"
+  ],
+  "val": [
+    "motherboard_0911_episode_002_seg00.pt",
+    "motherboard_0912_episode_003.pt"
+  ],
+  "test": [
+    "motherboard_0909_episode_000.pt",
+    "motherboard_0909_episode_001.pt",
+    "motherboard_0909_episode_002.pt",
+    "motherboard_0911_episode_008_seg00.pt",
+    "motherboard_0912_episode_002.pt"
+  ]
+}

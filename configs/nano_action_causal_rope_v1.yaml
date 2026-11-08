@@ -1,0 +1,66 @@
+# Exact training config of runs/nano_action_causal_rope_v1 (only machine paths replaced by env vars).
+# Needs ACTS_DATA_ROOT and ACTS_CKPT_ROOT (source env.sh). Launch: bash scripts/train.sh configs/nano_action_causal_rope_v1.yaml
+run_name: nano_action_causal_rope_v1
+seed: 0
+out_dir: ${oc.env:ACTS_RUNS_ROOT,runs}
+data:
+  latent_root: ${oc.env:ACTS_DATA_ROOT}/mixed_rope_latents
+  action_root: ${oc.env:ACTS_DATA_ROOT}/mixed_rope_actions
+  action_file: sensor_actions_with_dforce_fps15.pt
+  view_action_file: view_actions_fps15.pt
+  split_file: splits/mixed_rope_wrist_holdout.json
+  optional_streams: []
+  action_norm: quantile
+  train_window_stride: 1
+  val_window_stride: 50
+  stats_window_stride: 8
+  action_stats: null
+  num_workers: 4
+model:
+  language_model: nano
+  nano_checkpoint: ${oc.env:ACTS_CKPT_ROOT}/Cosmos3-Nano
+  strict_load: true
+  dtype: bfloat16
+  attention_backend: flex
+  flex_preference: flex_triton
+  temporal_mode: causal
+  attention_topology: all_streams_causal
+  task_mode: action_full
+  init_tactile_from_rgb: true
+  init_action_from_nano:
+    domain: umi
+  train_time_embedder: false
+  train_rgb_projections: false
+  lora:
+    enable: true
+    rank: 16
+    alpha: 32
+    targets: attn_ffn
+training:
+  prediction_strategy: causal_teacher_forcing
+  init_from_checkpoint: null
+  missing_stream_training: false
+  wrist_dropout:
+    probability: 0.0
+    mode: paired
+    scope: whole_clip
+  batching: group_by_active_streams
+  sampling:
+    mode: uniform
+    steps_per_epoch: null
+  val_hide_wrist: false
+  epochs: 20
+  batch_size: 2
+  lr: 5.0e-05
+  weight_decay: 0.01
+  warmup_steps: 100
+  grad_clip: 1.0
+  amp: bf16
+  sigma_distribution: waver
+  sigma_shift: 3.0
+  loss_weights: {}
+  log_every: 20
+  ckpt_every_epochs: 1
+  activation_checkpointing: true
+inference:
+  prediction_strategy: causal_autoregressive

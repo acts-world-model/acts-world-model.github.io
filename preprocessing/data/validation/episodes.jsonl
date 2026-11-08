@@ -1,0 +1,3 @@
+{"episode": "2026-09-09/episode_000", "date": "2026-09-09", "n_frames": 6661, "duration_s": 222.033, "active_sensors": ["left", "right"], "trim_offset": 0, "world_frame_offset": [0.0, 0.0, 0.0], "n_segments": 1, "total_bad_frames": 0, "up_axis": "z"}
+{"episode": "2026-09-09/episode_001", "date": "2026-09-09", "n_frames": 6755, "duration_s": 225.167, "active_sensors": ["left", "right"], "trim_offset": 0, "world_frame_offset": [0.0, 0.0, 0.0], "n_segments": 1, "total_bad_frames": 0, "up_axis": "z"}
+{"episode": "2026-09-09/episode_002", "date": "2026-09-09", "n_frames": 5647, "duration_s": 188.233, "active_sensors": ["left", "right"], "trim_offset": 0, "world_frame_offset": [0.0, 0.0, 0.0], "n_segments": 1, "total_bad_frames": 0, "up_axis": "z"}

@@ -1,0 +1,29 @@
+{
+ "task": "validation",
+ "calibration_id": "sept-09",
+ "created": "2026-09-09",
+ "method": "PNP (0.70 px middle)",
+ "applies_to_dates": [
+  "2026-09-09"
+ ],
+ "rmse_unit": "px",
+ "cameras": {
+  "left": {
+   "camera_serial": "104122062574",
+   "rmse": 0.5820335045117107,
+   "created_at": "2026-09-09T07:41:39"
+  },
+  "middle": {
+   "camera_serial": "217222066989",
+   "rmse": 0.6957969799496961,
+   "created_at": "2026-09-09T07:41:39"
+  },
+  "right": {
+   "camera_serial": "143322063538",
+   "rmse": 0.6641288760028174,
+   "created_at": "2026-09-09T07:41:39"
+  }
+ },
+ "projection_chain": "sensor_pose (mocap mm) -> T_mocap_to_cam -> camera intrinsics -> pixel; gel center via T_gel_to_rigid",
+ "note": "Solved on 2026-09-09 at 07:41, a few hours after the recordings it is applied to. The recorder's live overlay ran on the June-26 epoch during collection, and projecting the GelSight centres into a mid-episode frame puts June-26 on the sensors while this epoch sits 20-40 px away; both solves fit their own points to 0.5-0.7 px and share an identical gel-to-rigid transform, so they disagree only about where the cameras were. This epoch is the operator's choice. The June-26 files are in the repository as calibration/epoch_2026-06-26 if you want to compare."
+}
